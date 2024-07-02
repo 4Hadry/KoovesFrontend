@@ -25,7 +25,7 @@ const CheckOutForm = () => {
   const {
     shippingInfo,
     cartItems,
-    subtotal,
+    subTotal,
     tax,
     discount,
     shippingCharges,
@@ -39,38 +39,59 @@ const CheckOutForm = () => {
   const SubmitHandler = async (e) => {
     e.preventDefault();
 
-    if (!stripe || !elements) return;
+    if (!stripe || !elements) {
+      console.error("Stripe or Elements not properly initialized.");
+      return;
+    }
     setIsProcessing(true);
 
     const orderData = {
       shippingInfo,
       orderItems: cartItems,
-      subtotal,
+      subtotal: subTotal,
       tax,
       discount,
       shippingCharges,
       total,
       user: user?._id,
     };
+    console.log(orderData);
+    try {
+      const { paymentIntent, error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: { return_url: window.location.origin },
+        redirect: "if_required",
+      });
 
-    const { paymentIntent, error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: { return_url: window.location.origin },
-      redirect: "if_required",
-    });
-    if (error) {
+      if (error) {
+        console.error("Payment error: ", error);
+        setIsProcessing(false);
+        return toast.error("Error: " + error.message || "Something went wrong");
+      }
+
+      console.log("Payment intent status:", paymentIntent.status);
+
+      if (paymentIntent.status === "succeeded") {
+        const res = await newOrder(orderData);
+        console.log("res" + res);
+        dispatch(resetCart());
+        console.log("Order placed successfully.");
+        responseToast(res, navigate, "/order");
+      } else {
+        console.error(
+          "Unexpected payment intent status:",
+          paymentIntent.status
+        );
+        toast.error("Payment failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during payment processing:", error);
+      toast.error("An error occurred during payment processing.");
+    } finally {
       setIsProcessing(false);
-      return toast.error("Error " + error.message || "Somthing Went Wrong");
     }
-
-    if (paymentIntent.status === "succeeded") {
-      const res = await newOrder(orderData);
-      dispatch(resetCart());
-      console.log("Placing Order");
-      responseToast(res, navigate, "/order");
-    }
-    setIsProcessing(false);
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
@@ -92,7 +113,6 @@ const CheckOutForm = () => {
 
 const CheckOut = () => {
   const location = useLocation();
-
   const clientSecret = location.state;
 
   if (!clientSecret) return <Navigate to={"/shipping"} />;

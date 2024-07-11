@@ -25,6 +25,12 @@ const Dashboard = () => {
 
   if (isError) return <Navigate to={"/"} />;
 
+  const truncateString = (str) => {
+    if (str.length > 5) {
+      return str.slice(0, 5) + "...";
+    }
+    return str;
+  };
   return (
     <div className="admin-container">
       <AdminSidebar />
@@ -87,12 +93,14 @@ const Dashboard = () => {
                 <div>
                   {stats.categoryCount.map((i) => {
                     const [heading, value] = Object.entries(i)[0];
+                    const truncatedHeading = truncateString(heading);
+                    console.log(truncatedHeading);
 
                     return (
                       <CategoryItem
                         key={i.heading}
                         value={value}
-                        heading={heading}
+                        heading={truncatedHeading}
                         color={`hsl(${value * 4}, ${value}%, 50%)`}
                       />
                     );

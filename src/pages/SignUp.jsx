@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-hot-toast";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -11,6 +11,7 @@ const SignUp = () => {
     name: "",
     password: "",
   });
+  let navigate = useNavigate();
   const [login] = useLoginMutation();
   const changeInputHandler = (e) => {
     setUserData((prevState) => {
@@ -32,13 +33,14 @@ const SignUp = () => {
 
       if ("data" in res) {
         toast.success(res.data.message);
+        navigate("/");
       } else {
         const error = res.error;
         const mesage = error.data;
         toast.error(mesage.message);
       }
 
-      console.log(user);
+      // console.log(user);
     } catch (error) {
       toast.error("Signing in failed");
     }

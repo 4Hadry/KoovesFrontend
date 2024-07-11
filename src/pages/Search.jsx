@@ -52,9 +52,9 @@ const Search = () => {
   }
 
   return (
-    <div className="p-8 flex flex-row justify-start items-stretch min-h-[calc(100vh-6.5vh)] gap-8">
-      <aside className="min-w-[20rem] shadow-md p-8 flex flex-col justify-start items-stretch gap-2">
-        <h2 className="text-2xl font-bold mb-4">Filters</h2>
+    <div className="p-4 md:p-8 flex flex-col lg:flex-row justify-start items-stretch min-h-[calc(100vh-6.5vh)] gap-4 lg:gap-8">
+      <aside className="w-full lg:w-1/4 xl:w-1/5 shadow-md p-4 lg:p-8 flex flex-col justify-start items-stretch gap-2">
+        <h2 className="text-xl lg:text-2xl font-bold mb-4">Filters</h2>
         <div className="mb-4">
           <h4 className="text-lg font-semibold">Sort</h4>
           <select
@@ -98,20 +98,20 @@ const Search = () => {
         </div>
       </aside>
 
-      <main className="flex-1 p-8">
-        <h1 className="text-2xl font-bold mb-4">Products</h1>
+      <main className="flex-1 p-4 lg:p-8">
+        <h1 className="text-xl lg:text-2xl font-bold mb-4">Products</h1>
         <input
           type="text"
           placeholder="Search by name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="mb-4 p-2 w-1/2 border border-gray-300 rounded-lg text-lg"
+          className="mb-4 p-2 w-full lg:w-1/2 border border-gray-300 rounded-lg text-base lg:text-lg"
         />
         {productLoading ? (
           <Skeleton length={10} />
         ) : (
-          <div className="mb-10 ">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 place-items-center">
+          <div className="mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5 place-items-center">
               {searchData?.products.map((i) => (
                 <ProductCard
                   key={i._id}

@@ -47,9 +47,9 @@ const NewProduct = () => {
     // console.log(user._id, formData);
 
     const res = await NewProduct({ id: user._id, formData });
-    console.log(res);
+    // console.log(res);
 
-    responseToast(res, navigate, "admin/product");
+    responseToast(res, navigate, "/admin/product");
   };
 
   return (

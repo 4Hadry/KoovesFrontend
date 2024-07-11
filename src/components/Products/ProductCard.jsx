@@ -1,4 +1,5 @@
 import React from "react";
+import dummy from "../../assets/hero/headphone.png";
 import Button from "../../Shared/Button";
 import { server } from "../../redux/store";
 
@@ -8,7 +9,7 @@ const ProductCard = ({ productId, name, photo, price, stock, handler }) => {
       {/* Image Section */}
       <div className="relative">
         <img
-          src={`${server}/${photo}`}
+          src={`${server}/${photo}` || dummy}
           alt={name}
           className="h-[180px] lg:w-[300px] md:w-[200] sm:w-[150px] bg-gray-300 sm:h-[200px] md:h-[220px] lg:h-[240px] xl:h-[260px] object-cover rounded-t-lg"
         />

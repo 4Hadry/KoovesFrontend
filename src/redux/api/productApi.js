@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import axios from "axios";
 export const productAPI = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
@@ -53,7 +52,7 @@ export const productAPI = createApi({
       invalidatesTags: ["products"],
     }),
     deleteProduct: builder.mutation({
-      query: ({ formData, userId, productId }) => ({
+      query: ({ userId, productId }) => ({
         url: `${productId}?id=${userId}`,
         method: "DELETE",
       }),

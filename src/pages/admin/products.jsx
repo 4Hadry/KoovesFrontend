@@ -66,7 +66,7 @@ const Products = () => {
       <AdminSidebar />
       <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
       {/* <main> { Table }</main> */}
-      <Link to="/admin/product/new" className="create-product-btn">
+      <Link to="/admin/product/new" className="create-product-btn z-50">
         <FaPlus />
       </Link>
     </div>

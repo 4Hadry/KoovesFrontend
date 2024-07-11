@@ -1,9 +1,11 @@
 import React from "react";
 import dummy from "../../assets/hero/headphone.png";
-import Button from "../../Shared/Button";
 import { server } from "../../redux/store";
+import { truncateString } from "../../utils/features";
 
 const ProductCard = ({ productId, name, photo, price, stock, handler }) => {
+  let productName = truncateString({ str: name, ln: 20 });
+
   return (
     <div className="group relative bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
       {/* Image Section */}
@@ -16,11 +18,6 @@ const ProductCard = ({ productId, name, photo, price, stock, handler }) => {
         {/* Hover Button */}
         <div className="hidden group-hover:flex absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm justify-center items-center transition duration-300">
           <div>
-            {/* <Button
-              text={"Add to cart"}
-              bgColor={"bg-primary"}
-              textColor={"text-white"}
-            /> */}
             <button
               className="bg-primary text-white p-4 rounded-full"
               onClick={() => {
@@ -42,7 +39,9 @@ const ProductCard = ({ productId, name, photo, price, stock, handler }) => {
       </div>
       {/* Content Section */}
       <div className="p-4">
-        <h2 className="font-semibold text-lg text-gray-800 truncate">{name}</h2>
+        <h2 className="font-semibold text-lg text-gray-800 truncate">
+          {productName}
+        </h2>
         <div className="flex justify-between items-center mt-2">
           <h2 className="font-bold text-xl text-primary">${price}</h2>
           <span

@@ -25,7 +25,7 @@ const Header = ({ user }) => {
   };
 
   return (
-    <nav className=" bg-white">
+    <nav className=" bg-white fixed top-0 w-full z-40">
       <div className="flex justify-end gap-6 items-stretch p-5">
         <Link
           to={"/"}

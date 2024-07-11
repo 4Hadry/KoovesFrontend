@@ -10,7 +10,7 @@ import Table from "../../components/admin/DashboardTable";
 import { useStatsQuery } from "../../redux/api/dashboardApi";
 import { Skeleton } from "../Loader";
 import { Navigate } from "react-router-dom";
-import { getLastMonths } from "../../utils/features";
+import { getLastMonths, truncateString } from "../../utils/features";
 
 const { last6Months } = getLastMonths();
 
@@ -25,12 +25,6 @@ const Dashboard = () => {
 
   if (isError) return <Navigate to={"/"} />;
 
-  const truncateString = (str) => {
-    if (str.length > 5) {
-      return str.slice(0, 5) + "...";
-    }
-    return str;
-  };
   return (
     <div className="admin-container">
       <AdminSidebar />
@@ -93,8 +87,11 @@ const Dashboard = () => {
                 <div>
                   {stats.categoryCount.map((i) => {
                     const [heading, value] = Object.entries(i)[0];
-                    const truncatedHeading = truncateString(heading);
-                    console.log(truncatedHeading);
+                    const truncatedHeading = truncateString({
+                      str: heading,
+                      ln: 6,
+                    });
+                    // console.log(truncatedHeading);
 
                     return (
                       <CategoryItem

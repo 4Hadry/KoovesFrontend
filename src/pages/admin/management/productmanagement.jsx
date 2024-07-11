@@ -95,7 +95,7 @@ const Productmanagement = () => {
   return (
     <div className="admin-container">
       <AdminSidebar />
-      <main className="product-management">
+      <main className="product-management z-50">
         {isLoading ? (
           <Skeleton length={20} />
         ) : (

@@ -20,10 +20,7 @@ const columns = [
     Header: "Name",
     accessor: "name",
   },
-  {
-    Header: "Gender",
-    accessor: "gender",
-  },
+
   {
     Header: "Email",
     accessor: "email",

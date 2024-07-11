@@ -36,3 +36,10 @@ export const getLastMonths = () => {
     last12Months,
   };
 };
+
+export const truncateString = ({ str, ln }) => {
+  if (str.length > ln) {
+    return str.slice(0, ln) + "...";
+  }
+  return str;
+};
